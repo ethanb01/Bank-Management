@@ -13,7 +13,7 @@ int main() {
 	menu();
 	int choice;
 	read_int(&choice);
-	while (choice != 7)
+	while (choice != 6)
 	{
 		if (choice == 1)
 		{
@@ -23,9 +23,22 @@ int main() {
 		{
 			edit();
 		}
+		else if (choice == 3)
+		{
+			transact();
+		}
+		else if (choice == 4)
+		{
+			show();
+		}
+		else if (choice == 5)
+		{
+			delete_file();
+		}
+		
 
 		menu();
-		printf("What do you want to do? \n \n");
+		printf("\nWhat do you want to do? \n \n");
 		read_int(&choice);
 		}
 

@@ -9,11 +9,13 @@
 #include "File_Actions.h"
 
 
+
 #define ID_LEN 20
 #define FILE_SIZE 150
 
 
 char* get_name_file(int);
+
 
 int struct2file(Costumer *person)
 {
@@ -29,7 +31,7 @@ int struct2file(Costumer *person)
 	}
 	else
 	{
-		printf("Error: cannot open file %s.txt!\n", person->user_id);
+		printf("Error: cannot open file %d.txt!\n", person->user_id);
 		return 0;
 	}
 	free(path);
@@ -93,7 +95,7 @@ Costumer* file2struct(int user_id)
 
 void show_file(int user_id)
 {
-	const char* show_file_format = "Name : %s\nID : %d\nMobile : %s\nCity : %s\nMoney : %d\n";
+	const char* show_file_format = "Name : %s\nID : %d\nMobile : %s\nCity : %s\nMoney : %d\n\n\n";
 	Costumer *person = NULL;
 	char *file_name = get_name_file(user_id);
 	FILE* person_file = fopen(file_name, "r");
@@ -107,38 +109,23 @@ void show_file(int user_id)
 	free(person);
 }
 
+void transact_money_users(int id_source, int id_destination , int money) {
 
+	Costumer *user_source = file2struct(id_source);
+	Costumer *user_destination = file2struct(id_destination);
 
-void file2struct_V2(Costumer *c){
+	user_source->user_money -= money;
+	user_destination->user_money += money;
+	struct2file(user_source);
+	struct2file(user_destination);
 
-    FILE *reads;
+}
 
-    char filename[40];
-    int temp;
+void remove_file(int user_id) {
+	char *file_name = get_name_file(user_id);
+	if (remove(file_name) == 0)
+		printf("Deleted successfully\n\n\n");
+	else
+		printf("Unable to delete the file\n\n\n");
 
-    printf("Write the ID :  ");
-	read_int
-	reads=fopen(filename, "r");
-    if (reads==NULL) {
-        perror("Error");
-        return 1;
-    }
-    else { 
-        while(!feof(reads)) {
-            struct element *n= (struct element*)malloc(sizeof(struct element));             
-            fscanf(reads,"%d %d %d %d %lf", n->id, n->sign, n->year, n->month, n->amount);                  
-            n->next=NULL;                   
-
-            if(queue->head ==NULL) {
-                queue->head=n;
-            }
-            else {
-                queue->tail->next=n;
-            }
-
-            queue->tail=n;
-            queue->size++;                  
-
-        }           
-    }
 }
